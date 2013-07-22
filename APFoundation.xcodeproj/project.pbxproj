@@ -17,6 +17,10 @@
 		5BE2FBB3179804CA00DADEEA /* libAPFoundation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE2FB9A179804CA00DADEEA /* libAPFoundation.a */; };
 		5BE2FBB9179804CA00DADEEA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BE2FBB7179804CA00DADEEA /* InfoPlist.strings */; };
 		5BE2FBBC179804CA00DADEEA /* APFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE2FBBB179804CA00DADEEA /* APFoundationTests.m */; };
+		C72E05D6179D0782004CA809 /* NSTimer+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */; };
+		C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */; };
+		C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
+		C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DF179D0880004CA809 /* NSString+APFoundation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,14 @@
 		5BE2FBB8179804CA00DADEEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BE2FBBA179804CA00DADEEA /* APFoundationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APFoundationTests.h; sourceTree = "<group>"; };
 		5BE2FBBB179804CA00DADEEA /* APFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APFoundationTests.m; sourceTree = "<group>"; };
+		C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+APFoundation.m"; sourceTree = "<group>"; };
+		C72E05D5179D0782004CA809 /* NSTimer+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+APFoundation.h"; sourceTree = "<group>"; };
+		C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+APFoundation.m"; sourceTree = "<group>"; };
+		C72E05D8179D0795004CA809 /* UIImage+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+APFoundation.h"; sourceTree = "<group>"; };
+		C72E05DB179D07E5004CA809 /* SKProduct+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SKProduct+APFoundation.h"; sourceTree = "<group>"; };
+		C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+APFoundation.m"; sourceTree = "<group>"; };
+		C72E05DE179D0880004CA809 /* NSString+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+APFoundation.h"; sourceTree = "<group>"; };
+		C72E05DF179D0880004CA809 /* NSString+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APFoundation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +127,7 @@
 		5BE2FB9F179804CA00DADEEA /* APFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				C72E05DA179D07A4004CA809 /* StoreKit */,
 				5BE2FBC61798056000DADEEA /* CoreData */,
 				5BE2FBC71798056600DADEEA /* CoreLocation */,
 				5BE2FBC81798056C00DADEEA /* Foundation */,
@@ -157,8 +170,10 @@
 		5BE2FBC51798054E00DADEEA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				C72E05D8179D0795004CA809 /* UIImage+APFoundation.h */,
+				C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */,
 			);
-			name = UIKit;
+			path = UIKit;
 			sourceTree = "<group>";
 		};
 		5BE2FBC61798056000DADEEA /* CoreData */ = {
@@ -178,8 +193,12 @@
 		5BE2FBC81798056C00DADEEA /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				C72E05DE179D0880004CA809 /* NSString+APFoundation.h */,
+				C72E05DF179D0880004CA809 /* NSString+APFoundation.m */,
+				C72E05D5179D0782004CA809 /* NSTimer+APFoundation.h */,
+				C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */,
 			);
-			name = Foundation;
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		5BE2FBC91798058200DADEEA /* External */ = {
@@ -188,6 +207,15 @@
 			);
 			name = External;
 			path = APFoundation/External;
+			sourceTree = "<group>";
+		};
+		C72E05DA179D07A4004CA809 /* StoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				C72E05DB179D07E5004CA809 /* SKProduct+APFoundation.h */,
+				C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */,
+			);
+			path = StoreKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +317,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B6BABB017981E4C004FADE1 /* Temp.m in Sources */,
+				C72E05D6179D0782004CA809 /* NSTimer+APFoundation.m in Sources */,
+				C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */,
+				C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */,
+				C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
