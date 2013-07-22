@@ -21,6 +21,7 @@
 		C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */; };
 		C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
 		C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DF179D0880004CA809 /* NSString+APFoundation.m */; };
+		C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SKProduct+APFoundation.m"; sourceTree = "<group>"; };
 		C72E05DE179D0880004CA809 /* NSString+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+APFoundation.h"; sourceTree = "<group>"; };
 		C72E05DF179D0880004CA809 /* NSString+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APFoundation.m"; sourceTree = "<group>"; };
+		C72E05E1179D1E88004CA809 /* NSObject+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+APFoundation.h"; sourceTree = "<group>"; };
+		C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+APFoundation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +200,8 @@
 				C72E05DF179D0880004CA809 /* NSString+APFoundation.m */,
 				C72E05D5179D0782004CA809 /* NSTimer+APFoundation.h */,
 				C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */,
+				C72E05E1179D1E88004CA809 /* NSObject+APFoundation.h */,
+				C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -321,6 +326,7 @@
 				C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */,
 				C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */,
 				C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */,
+				C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
