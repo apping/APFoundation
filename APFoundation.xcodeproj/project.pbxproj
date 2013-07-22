@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B6BABB017981E4C004FADE1 /* Temp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6BABAF17981E49004FADE1 /* Temp.m */; };
-		5B6BABB117981E4D004FADE1 /* Temp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B6BABAF17981E49004FADE1 /* Temp.m */; };
 		5BE2FB9E179804CA00DADEEA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE2FB9D179804CA00DADEEA /* Foundation.framework */; };
 		5BE2FBA3179804CA00DADEEA /* APFoundation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5BE2FBA2179804CA00DADEEA /* APFoundation.h */; };
 		5BE2FBAD179804CA00DADEEA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE2FBAC179804CA00DADEEA /* SenTestingKit.framework */; };
@@ -48,8 +46,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5B6BABAE17981E49004FADE1 /* Temp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Temp.h; sourceTree = "<group>"; };
-		5B6BABAF17981E49004FADE1 /* Temp.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Temp.m; sourceTree = "<group>"; };
 		5BE2FB9A179804CA00DADEEA /* libAPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE2FB9D179804CA00DADEEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5BE2FBA1179804CA00DADEEA /* APFoundation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "APFoundation-Prefix.pch"; sourceTree = "<group>"; };
@@ -136,8 +132,6 @@
 				5BE2FBC81798056C00DADEEA /* Foundation */,
 				5BE2FBC51798054E00DADEEA /* UIKit */,
 				5BE2FBA2179804CA00DADEEA /* APFoundation.h */,
-				5B6BABAE17981E49004FADE1 /* Temp.h */,
-				5B6BABAF17981E49004FADE1 /* Temp.m */,
 			);
 			path = APFoundation;
 			sourceTree = "<group>";
@@ -321,7 +315,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B6BABB017981E4C004FADE1 /* Temp.m in Sources */,
 				C72E05D6179D0782004CA809 /* NSTimer+APFoundation.m in Sources */,
 				C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */,
 				C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */,
@@ -335,7 +328,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BE2FBBC179804CA00DADEEA /* APFoundationTests.m in Sources */,
-				5B6BABB117981E4D004FADE1 /* Temp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
