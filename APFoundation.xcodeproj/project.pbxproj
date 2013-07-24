@@ -46,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5BD6DAC0179FF07C0030AC08 /* APLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APLogging.h; sourceTree = "<group>"; };
 		5BE2FB9A179804CA00DADEEA /* libAPFoundation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAPFoundation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BE2FB9D179804CA00DADEEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5BE2FBA1179804CA00DADEEA /* APFoundation-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "APFoundation-Prefix.pch"; sourceTree = "<group>"; };
@@ -196,6 +197,7 @@
 				C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */,
 				C72E05E1179D1E88004CA809 /* NSObject+APFoundation.h */,
 				C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */,
+				5BD6DAC0179FF07C0030AC08 /* APLogging.h */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
