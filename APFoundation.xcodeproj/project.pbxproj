@@ -59,6 +59,7 @@
 		5BE2FBB8179804CA00DADEEA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BE2FBBA179804CA00DADEEA /* APFoundationTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APFoundationTests.h; sourceTree = "<group>"; };
 		5BE2FBBB179804CA00DADEEA /* APFoundationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APFoundationTests.m; sourceTree = "<group>"; };
+		C7291CCE17A694550066C7C7 /* APLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLogging.h; sourceTree = "<group>"; };
 		C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+APFoundation.m"; sourceTree = "<group>"; };
 		C72E05D5179D0782004CA809 /* NSTimer+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+APFoundation.h"; sourceTree = "<group>"; };
 		C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+APFoundation.m"; sourceTree = "<group>"; };
@@ -194,6 +195,7 @@
 		5BE2FBC81798056C00DADEEA /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				C7291CCE17A694550066C7C7 /* APLogging.h */,
 				C72E05DE179D0880004CA809 /* NSString+APFoundation.h */,
 				C72E05DF179D0880004CA809 /* NSString+APFoundation.m */,
 				C72E05D5179D0782004CA809 /* NSTimer+APFoundation.h */,
