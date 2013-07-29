@@ -19,4 +19,11 @@
     return s;
 }
 
+- (NSUInteger)ap_integerValueFromHex
+{
+	int result = 0;
+	sscanf([self UTF8String], "%x", &result);
+	return result;
+}
+
 @end

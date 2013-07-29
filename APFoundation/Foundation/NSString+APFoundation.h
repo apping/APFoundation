@@ -13,6 +13,9 @@
 /*
  Strips everything that looks like a HTML tag
  */
-- (NSString *)ap_stringByStrippingHTML; 
+- (NSString *)ap_stringByStrippingHTML;
+
+
+- (NSUInteger)ap_integerValueFromHex;
 
 @end

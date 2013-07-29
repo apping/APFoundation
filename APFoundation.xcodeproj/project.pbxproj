@@ -20,6 +20,8 @@
 		C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
 		C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DF179D0880004CA809 /* NSString+APFoundation.m */; };
 		C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */; };
+		C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */; };
+		C73B59E317A6909D00C4BA93 /* UIColor+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +69,8 @@
 		C72E05DF179D0880004CA809 /* NSString+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+APFoundation.m"; sourceTree = "<group>"; };
 		C72E05E1179D1E88004CA809 /* NSObject+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+APFoundation.h"; sourceTree = "<group>"; };
 		C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+APFoundation.m"; sourceTree = "<group>"; };
+		C73B59DA17A67CAF00C4BA93 /* UIColor+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+APFoundation.h"; sourceTree = "<group>"; };
+		C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+APFoundation.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +200,8 @@
 				C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */,
 				C72E05E1179D1E88004CA809 /* NSObject+APFoundation.h */,
 				C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */,
+				C73B59DA17A67CAF00C4BA93 /* UIColor+APFoundation.h */,
+				C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -320,6 +326,7 @@
 				C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */,
 				C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */,
 				C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */,
+				C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BE2FBBC179804CA00DADEEA /* APFoundationTests.m in Sources */,
+				C73B59E317A6909D00C4BA93 /* UIColor+APFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
