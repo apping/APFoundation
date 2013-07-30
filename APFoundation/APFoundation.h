@@ -13,6 +13,10 @@
 #import "NSTimer+APFoundation.h"
 #import "NSObject+APFoundation.h"
 
+#pragma mark UIKit
+
+#import "UIColor+APFoundation.h"
+
 #pragma mark STORE KIT
 
 #import "SKProduct+APFoundation.h"

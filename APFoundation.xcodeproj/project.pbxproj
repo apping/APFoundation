@@ -17,11 +17,11 @@
 		5BE2FBBC179804CA00DADEEA /* APFoundationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE2FBBB179804CA00DADEEA /* APFoundationTests.m */; };
 		C72E05D6179D0782004CA809 /* NSTimer+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05D4179D0782004CA809 /* NSTimer+APFoundation.m */; };
 		C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */; };
-		C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
 		C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DF179D0880004CA809 /* NSString+APFoundation.m */; };
 		C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */; };
 		C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */; };
 		C73B59E317A6909D00C4BA93 /* UIColor+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */; };
+		C7680B3017A7BFDD00C4CB00 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -325,10 +325,10 @@
 			files = (
 				C72E05D6179D0782004CA809 /* NSTimer+APFoundation.m in Sources */,
 				C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */,
-				C72E05DD179D07E5004CA809 /* SKProduct+APFoundation.m in Sources */,
 				C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */,
 				C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */,
 				C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */,
+				C7680B3017A7BFDD00C4CB00 /* SKProduct+APFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
