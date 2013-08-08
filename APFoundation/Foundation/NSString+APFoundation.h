@@ -15,7 +15,8 @@
  */
 - (NSString *)ap_stringByStrippingHTML;
 
-
 - (NSUInteger)ap_integerValueFromHex;
+
++ (NSString *)ap_generateUUID;
 
 @end

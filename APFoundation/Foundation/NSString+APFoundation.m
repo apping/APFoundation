@@ -26,4 +26,18 @@
 	return result;
 }
 
++ (NSString *)ap_generateUUID {
+    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+    
+	CFStringRef uuid_string = CFUUIDCreateString(kCFAllocatorDefault, uuid);
+    NSAssert(uuid_string, @"uuid_string was not generated properly!");
+	NSString *uuidString = [NSString stringWithString:CFBridgingRelease(uuid_string)];
+	
+	CFRelease(uuid);
+    
+    NSAssert(uuidString, @"Failed to convert uuid_string to NSString!");
+    
+    return uuidString;
+}
+
 @end
