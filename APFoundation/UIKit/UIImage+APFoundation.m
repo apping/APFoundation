@@ -72,4 +72,12 @@ static CGFloat edgeSizeFromCornerRadius(CGFloat cornerRadius) {
     return [image resizableImageWithCapInsets:UIEdgeInsetsMake(cornerRadius, cornerRadius, cornerRadius, cornerRadius)];
 }
 
++ (UIImage *)ap_imageWithColor:(UIColor *)color andSize:(CGSize)size {
+    return [UIImage ap_imageForSize:size opaque:YES withDrawingBlock:^{
+        UIBezierPath* rPath = [UIBezierPath bezierPathWithRect:CGRectMake(0., 0., size.width, size.height)];
+        [color setFill];
+        [rPath fill];
+    }];
+}
+
 @end

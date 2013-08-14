@@ -25,4 +25,5 @@ The `UIImage` is cached in an `NSCache` with the identifier provided. */
 + (UIImage *)ap_imageWithIdentifier:(NSString *)identifier opaque:(BOOL)opaque forSize:(CGSize)size andDrawingBlock:(void(^)())drawingBlock;
 
 + (UIImage *)ap_imageWithColor:(UIColor *)color cornerRadius:(CGFloat)cornerRadius;
++ (UIImage *)ap_imageWithColor:(UIColor *)color andSize:(CGSize)size;
 @end
