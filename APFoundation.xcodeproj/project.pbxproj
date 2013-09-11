@@ -22,6 +22,7 @@
 		C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */; };
 		C73B59E317A6909D00C4BA93 /* UIColor+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */; };
 		C7680B3017A7BFDD00C4CB00 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
+		DA21A8AB17E0B2A300F04B40 /* APPresentationTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA21A8AA17E0B2A300F04B40 /* APPresentationTimer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,8 @@
 		C72E05E2179D1E88004CA809 /* NSObject+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+APFoundation.m"; sourceTree = "<group>"; };
 		C73B59DA17A67CAF00C4BA93 /* UIColor+APFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+APFoundation.h"; sourceTree = "<group>"; };
 		C73B59DB17A67CAF00C4BA93 /* UIColor+APFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+APFoundation.m"; sourceTree = "<group>"; };
+		DA21A8A917E0B2A300F04B40 /* APPresentationTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPresentationTimer.h; sourceTree = "<group>"; };
+		DA21A8AA17E0B2A300F04B40 /* APPresentationTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPresentationTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +177,8 @@
 			children = (
 				C72E05D8179D0795004CA809 /* UIImage+APFoundation.h */,
 				C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */,
+				DA21A8A917E0B2A300F04B40 /* APPresentationTimer.h */,
+				DA21A8AA17E0B2A300F04B40 /* APPresentationTimer.m */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -328,6 +333,7 @@
 				C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */,
 				C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */,
 				C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */,
+				DA21A8AB17E0B2A300F04B40 /* APPresentationTimer.m in Sources */,
 				C7680B3017A7BFDD00C4CB00 /* SKProduct+APFoundation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

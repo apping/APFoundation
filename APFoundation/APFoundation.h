@@ -16,6 +16,7 @@
 #pragma mark UIKit
 
 #import "UIColor+APFoundation.h"
+#import "APPresentationTimer.h"
 
 #pragma mark STORE KIT
 
