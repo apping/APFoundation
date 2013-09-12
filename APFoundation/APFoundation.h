@@ -18,6 +18,10 @@
 #import "UIColor+APFoundation.h"
 #import "APPresentationTimer.h"
 
+#pragma mark CoreLocation
+
+#import "APLocator.h"
+
 #pragma mark STORE KIT
 
 #import "SKProduct+APFoundation.h"
