@@ -17,6 +17,8 @@
 
 - (NSUInteger)ap_integerValueFromHex;
 
++ (BOOL)ap_stringHasCharacters:(NSString *)string;
+
 + (NSString *)ap_generateUUID;
 
 @end

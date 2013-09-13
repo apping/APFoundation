@@ -57,6 +57,7 @@
         }
         
         _locationManager = [[CLLocationManager alloc] init];
+        [_locationManager setDesiredAccuracy:kCLLocationAccuracyHundredMeters];
         [_locationManager setDelegate:self];
         _updatingLocations = YES;
         [_locationManager startUpdatingLocation];

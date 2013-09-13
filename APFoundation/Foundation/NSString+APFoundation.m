@@ -26,6 +26,16 @@
 	return result;
 }
 
++ (BOOL)ap_stringHasCharacters:(NSString *)string {
+    if(!string)
+        return NO;
+    
+    if([string length] == 0)
+        return NO;
+    
+    return [string rangeOfCharacterFromSet:[[NSCharacterSet whitespaceAndNewlineCharacterSet] invertedSet]].location != NSNotFound;
+}
+
 + (NSString *)ap_generateUUID {
     CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
     
