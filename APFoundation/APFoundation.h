@@ -21,6 +21,7 @@
 #pragma mark CoreLocation
 
 #import "APLocator.h"
+#import "CLGeocoder+Timeout.h"
 
 #pragma mark STORE KIT
 

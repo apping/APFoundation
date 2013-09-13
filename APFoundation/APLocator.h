@@ -11,6 +11,7 @@
 
 typedef void (^APLocatorCompletionHandler)(CLPlacemark *location);
 
+///Has a simple interface for retrieving one and only one location (the current location).
 @interface APLocator : NSObject <CLLocationManagerDelegate> {
     CLLocationManager *_locationManager;
     BOOL _updatingLocations;
