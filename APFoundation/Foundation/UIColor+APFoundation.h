@@ -10,6 +10,9 @@
 
 @interface UIColor (APFoundation)
 
+- (UIColor *)an_darken;
+- (UIColor *)an_lighten;
+
 + (UIColor *)ap_colorWithHexString:(NSString *)hex;
 + (UIColor *)ap_colorWithHexString:(NSString *)hex alpha:(CGFloat)alpha;
 
