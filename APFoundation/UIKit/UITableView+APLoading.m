@@ -15,7 +15,7 @@ static const char UITableViewAPLoadingPresentationTimerKey;
 
 @interface UITableView (APLoading_Private)
 
-- (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView;
+- (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler type:(APTableViewLoadingType)type minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler;
 
 - (APPresentationTimer *)presentationTimer;
 
@@ -24,14 +24,18 @@ static const char UITableViewAPLoadingPresentationTimerKey;
 @implementation UITableView (APLoading)
 
 - (void)loadWithHandler:(APTableViewLoadingHandler)handler {
-    [self loadWithHandler:handler andMinimumLoadingTime:0.0];
+    [self loadWithHandler:handler andCompletionHandler:NULL];
 }
 
-- (void)loadWithHandler:(APTableViewLoadingHandler)handler andMinimumLoadingTime:(NSTimeInterval)minimumLoadingTime {
-    [self loadWithHandler:handler minimumLoadingTime:minimumLoadingTime loadingView:[[APDefaultTableViewLoadingView alloc] init]];
+- (void)loadWithHandler:(APTableViewLoadingHandler)handler andCompletionHandler:(APTableViewLoadingCompletionHandler)completionHandler {
+    [self loadWithHandler:handler minimumLoadingTime:0.0 completionHandler:completionHandler];
 }
 
-- (void)loadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView {
+- (void)loadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime completionHandler:(APTableViewLoadingCompletionHandler)completionHandler {
+    [self loadWithHandler:handler minimumLoadingTime:minimumLoadingTime loadingView:[[APDefaultTableViewLoadingView alloc] init] completionHandler:completionHandler];
+}
+
+- (void)loadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler {
     [self setScrollEnabled:NO];
     
     [loadingView setFrame:self.bounds];
@@ -43,7 +47,7 @@ static const char UITableViewAPLoadingPresentationTimerKey;
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [loadingView setAlpha:1.0f];
     } completion:^(BOOL finished) {
-        [self beginLoadWithHandler:handler minimumLoadingTime:minimumLoadingTime loadingView:loadingView];
+        [self beginLoadWithHandler:handler type:APTableViewLoadingTypeInitial minimumLoadingTime:minimumLoadingTime loadingView:loadingView completionHandler:completionHandler];
     }];
 }
 
@@ -51,15 +55,18 @@ static const char UITableViewAPLoadingPresentationTimerKey;
 
 @implementation UITableView (APLoading_Private)
 
-- (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView {
+- (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler type:(APTableViewLoadingType)type minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler {
     APPresentationTimer *presentationTimer = [self presentationTimer];
     [presentationTimer setMinimumPresentationTime:minimumLoadingTime];
     [presentationTimer time];
     
     __weak UIView<IAPTableViewLoadingView> * _loadingView = loadingView;
-    handler(APTableViewLoadingTypeInitial, ^(BOOL successful){
+    handler(type, ^(BOOL successful){
         [presentationTimer endWithCompletionHandler:^{
             if(successful){
+                if(completionHandler)
+                    completionHandler(APTableViewLoadingCompletionTypeLoadCompleted);
+                
                 [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     [loadingView setAlpha:0.0f];
                 } completion:^(BOOL finished) {
@@ -67,12 +74,15 @@ static const char UITableViewAPLoadingPresentationTimerKey;
                     [loadingView removeFromSuperview];
                     
                     [self setScrollEnabled:YES];
+                    
+                    if(completionHandler)
+                        completionHandler(APTableViewLoadingCompletionTypeAnimationCompleted);
                 }];
             }
             else{
                 [loadingView setRetryCallback:^{
                     [_loadingView stateChanged:APTableViewLoadingStateLoading];
-                    [self beginLoadWithHandler:handler minimumLoadingTime:minimumLoadingTime loadingView:_loadingView];
+                    [self beginLoadWithHandler:handler type:APTableViewLoadingTypeRetry minimumLoadingTime:minimumLoadingTime loadingView:_loadingView completionHandler:completionHandler];
                 }];
                 
                 [loadingView stateChanged:APTableViewLoadingStateError];

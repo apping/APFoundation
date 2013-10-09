@@ -13,15 +13,22 @@ typedef NS_ENUM(NSUInteger, APTableViewLoadingType) {
     APTableViewLoadingTypeRetry
 };
 
+typedef NS_ENUM(NSUInteger, APTableViewLoadingCompletionType) {
+    APTableViewLoadingCompletionTypeLoadCompleted,
+    APTableViewLoadingCompletionTypeAnimationCompleted
+};
+
 typedef void (^APTableViewLoadingCallback)(BOOL successful);
 typedef void (^APTableViewLoadingHandler)(APTableViewLoadingType type, APTableViewLoadingCallback callback);
+typedef void (^APTableViewLoadingCompletionHandler)(APTableViewLoadingCompletionType type);
 
 @protocol IAPTableViewLoadingView;
 
 @interface UITableView (APLoading)
 
 - (void)loadWithHandler:(APTableViewLoadingHandler)handler;
-- (void)loadWithHandler:(APTableViewLoadingHandler)handler andMinimumLoadingTime:(NSTimeInterval)minimumLoadingTime;
-- (void)loadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView;
+- (void)loadWithHandler:(APTableViewLoadingHandler)handler andCompletionHandler:(APTableViewLoadingCompletionHandler)completionHandler;
+- (void)loadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime completionHandler:(APTableViewLoadingCompletionHandler)completionHandler;
+- (void)loadWithHandler:(APTableViewLoadingHandler)handler minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler;
 
 @end
