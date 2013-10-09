@@ -15,6 +15,8 @@ static const char UITableViewAPLoadingPresentationTimerKey;
 
 @interface UITableView (APLoading_Private)
 
+- (BOOL)hasContent;
+
 - (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler type:(APTableViewLoadingType)type minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler;
 
 - (APPresentationTimer *)presentationTimer;
@@ -40,20 +42,31 @@ static const char UITableViewAPLoadingPresentationTimerKey;
     
     [loadingView setFrame:self.bounds];
     [loadingView stateChanged:APTableViewLoadingStateLoading];
-    [loadingView setAlpha:0.0f];
+    [loadingView.layer setZPosition:CGFLOAT_MAX];
+    
+    BOOL animate = [self hasContent];
+    [loadingView setAlpha:animate ? 0.0f : 1.0f];
     
     [self addSubview:loadingView];
     
-    [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [loadingView setAlpha:1.0f];
-    } completion:^(BOOL finished) {
+    if(animate){
+        [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [loadingView setAlpha:1.0f];
+        } completion:^(BOOL finished) {
+            [self beginLoadWithHandler:handler type:APTableViewLoadingTypeInitial minimumLoadingTime:minimumLoadingTime loadingView:loadingView completionHandler:completionHandler];
+        }];
+    }
+    else
         [self beginLoadWithHandler:handler type:APTableViewLoadingTypeInitial minimumLoadingTime:minimumLoadingTime loadingView:loadingView completionHandler:completionHandler];
-    }];
 }
 
 @end
 
 @implementation UITableView (APLoading_Private)
+
+- (BOOL)hasContent {
+    return [self.visibleCells count] > 0;
+}
 
 - (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler type:(APTableViewLoadingType)type minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler {
     APPresentationTimer *presentationTimer = [self presentationTimer];
