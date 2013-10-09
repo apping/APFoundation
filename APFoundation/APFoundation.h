@@ -16,6 +16,7 @@
 #pragma mark UIKit
 
 #import "UIColor+APFoundation.h"
+#import "UITableView+APLoading.h"
 #import "APPresentationTimer.h"
 
 #pragma mark CoreLocation
@@ -27,5 +28,3 @@
 
 #import "SKProduct+APFoundation.h"
 #import "UIImage+APFoundation.h"
-
-

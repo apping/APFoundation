@@ -24,6 +24,8 @@
 		C7680B3017A7BFDD00C4CB00 /* SKProduct+APFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */; };
 		DA0D54D217E3311500932FBD /* CLGeocoder+Timeout.m in Sources */ = {isa = PBXBuildFile; fileRef = DA0D54D117E3311500932FBD /* CLGeocoder+Timeout.m */; };
 		DA21A8AB17E0B2A300F04B40 /* APPresentationTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = DA21A8AA17E0B2A300F04B40 /* APPresentationTimer.m */; };
+		DAC4157718043F1B00D86BCC /* UITableView+APLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC4157618043F1B00D86BCC /* UITableView+APLoading.m */; };
+		DAC4157C1804417A00D86BCC /* APDefaultTableViewLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = DAC4157B1804417A00D86BCC /* APDefaultTableViewLoadingView.m */; };
 		DAF79C1C17E1F08100C98CEB /* APLocator.m in Sources */ = {isa = PBXBuildFile; fileRef = DAF79C1B17E1F08100C98CEB /* APLocator.m */; };
 		DAF79C1E17E1F0AD00C98CEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAF79C1D17E1F0AD00C98CEB /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +82,11 @@
 		DA0D54D117E3311500932FBD /* CLGeocoder+Timeout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLGeocoder+Timeout.m"; sourceTree = "<group>"; };
 		DA21A8A917E0B2A300F04B40 /* APPresentationTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPresentationTimer.h; sourceTree = "<group>"; };
 		DA21A8AA17E0B2A300F04B40 /* APPresentationTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPresentationTimer.m; sourceTree = "<group>"; };
+		DAC4157518043F1B00D86BCC /* UITableView+APLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+APLoading.h"; sourceTree = "<group>"; };
+		DAC4157618043F1B00D86BCC /* UITableView+APLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+APLoading.m"; sourceTree = "<group>"; };
+		DAC41579180440EB00D86BCC /* IAPTableViewLoadingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IAPTableViewLoadingView.h; sourceTree = "<group>"; };
+		DAC4157A1804417A00D86BCC /* APDefaultTableViewLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APDefaultTableViewLoadingView.h; sourceTree = "<group>"; };
+		DAC4157B1804417A00D86BCC /* APDefaultTableViewLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APDefaultTableViewLoadingView.m; sourceTree = "<group>"; };
 		DAF79C1A17E1F08100C98CEB /* APLocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLocator.h; sourceTree = "<group>"; };
 		DAF79C1B17E1F08100C98CEB /* APLocator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLocator.m; sourceTree = "<group>"; };
 		DAF79C1D17E1F0AD00C98CEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -185,6 +192,7 @@
 		5BE2FBC51798054E00DADEEA /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				DAC4157818043F1F00D86BCC /* UITableView Loading */,
 				C72E05D8179D0795004CA809 /* UIImage+APFoundation.h */,
 				C72E05D7179D0795004CA809 /* UIImage+APFoundation.m */,
 				DA21A8A917E0B2A300F04B40 /* APPresentationTimer.h */,
@@ -242,6 +250,18 @@
 				C72E05DC179D07E5004CA809 /* SKProduct+APFoundation.m */,
 			);
 			path = StoreKit;
+			sourceTree = "<group>";
+		};
+		DAC4157818043F1F00D86BCC /* UITableView Loading */ = {
+			isa = PBXGroup;
+			children = (
+				DAC4157518043F1B00D86BCC /* UITableView+APLoading.h */,
+				DAC4157618043F1B00D86BCC /* UITableView+APLoading.m */,
+				DAC41579180440EB00D86BCC /* IAPTableViewLoadingView.h */,
+				DAC4157A1804417A00D86BCC /* APDefaultTableViewLoadingView.h */,
+				DAC4157B1804417A00D86BCC /* APDefaultTableViewLoadingView.m */,
+			);
+			name = "UITableView Loading";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,10 +365,12 @@
 				C72E05D6179D0782004CA809 /* NSTimer+APFoundation.m in Sources */,
 				C72E05D9179D0795004CA809 /* UIImage+APFoundation.m in Sources */,
 				C72E05E0179D0880004CA809 /* NSString+APFoundation.m in Sources */,
+				DAC4157718043F1B00D86BCC /* UITableView+APLoading.m in Sources */,
 				DAF79C1C17E1F08100C98CEB /* APLocator.m in Sources */,
 				C72E05E3179D1E88004CA809 /* NSObject+APFoundation.m in Sources */,
 				C73B59DC17A67CAF00C4BA93 /* UIColor+APFoundation.m in Sources */,
 				DA21A8AB17E0B2A300F04B40 /* APPresentationTimer.m in Sources */,
+				DAC4157C1804417A00D86BCC /* APDefaultTableViewLoadingView.m in Sources */,
 				DA0D54D217E3311500932FBD /* CLGeocoder+Timeout.m in Sources */,
 				C7680B3017A7BFDD00C4CB00 /* SKProduct+APFoundation.m in Sources */,
 			);
