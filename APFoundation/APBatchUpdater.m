@@ -186,7 +186,7 @@ static const char APUpdatableItemMetadataKey;
         return;
     }
     
-    if([NSDate isUnit:requiredUpdateIntervalTimeUnit smallerThanUnit:_updateIntervalTimeUnit])
+    if(requiredUpdateIntervalTimeUnit != _updateIntervalTimeUnit)
         [self restartUpdatingWithInterval:requiredUpdateIntervalTimeUnit];
 }
 
