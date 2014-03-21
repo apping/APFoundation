@@ -10,6 +10,7 @@
 #import "NSDate+APTimeUnit.h"
 
 typedef NS_ENUM(NSUInteger, APUpdatableItemStatus){
+    APUpdatableItemStatusNone,
     APUpdatableItemStatusNoChange,
     APUpdatableItemStatusDirty,
     APUpdatableItemStatusExpired
@@ -20,9 +21,11 @@ typedef NS_ENUM(NSUInteger, APUpdatableItemStatus){
 @interface APUpdatableItemMetadata : NSObject
 
 @property (nonatomic) NSTimeInterval remainingTime;
-@property (nonatomic, readonly) APTimeUnit timeUnit;
+@property (nonatomic, readonly) CFAbsoluteTime lastUpdateTime;
+@property (nonatomic, readonly) APTimeUnit updateIntervalTimeUnit;
 
-- (APUpdatableItemStatus)statusWithRemainingtime:(NSTimeInterval)remainingTime;
+- (BOOL)isUpdatable;
+- (APUpdatableItemStatus)statusWithRemainingTime:(NSTimeInterval)remainingTime;
 - (void)setRemainingTime:(NSTimeInterval)remainingTime withCurrentTime:(CFAbsoluteTime)currentTime;
 
 @end

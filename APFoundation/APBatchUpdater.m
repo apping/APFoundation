@@ -9,18 +9,23 @@
 #import "APBatchUpdater.h"
 #import "IAPUpdatable.h"
 #import "APUpdatableItemMetadata.h"
-#import "NSDate+APTimeUnit.h"
+#import "APFixedIntervalTimer.h"
 #import <objc/runtime.h>
 
 static const char APUpdatableItemMetadataKey;
 
-@interface APBatchUpdater ()
+@interface APBatchUpdater () <APFixedIntervalTimerDelegate>
 
 - (APUpdatableItemMetadata *)addItem:(id<IAPUpdatable>)item;
 - (void)proposeUpdateStartForItem:(id<IAPUpdatable>)item withMetadata:(APUpdatableItemMetadata *)metadata;
 
 - (void)startUpdating;
 - (void)restartUpdatingWithInterval:(APTimeUnit)interval;
+- (APTimeUnit)requiredUpdateIntervalTimeUnit;
+- (NSTimeInterval)updateIntervalForTimeUnit:(APTimeUnit)timeUnit;
+- (void)fullUpdate;
+- (void)update;
+- (void)updateItem:(id<IAPUpdatable>)item withCurrentTime:(CFAbsoluteTime)currentTime;
 - (void)stopUpdating;
 
 - (BOOL)hasItems;
@@ -34,7 +39,8 @@ static const char APUpdatableItemMetadataKey;
 @implementation APBatchUpdater {
     NSMutableSet *__items;
     
-    APTimeUnit _updateInterval;
+    APTimeUnit _updateIntervalTimeUnit;
+    APFixedIntervalTimer *_intervalTimer;
 }
 
 - (void)addItem:(id<IAPUpdatable>)item withRemainingTime:(NSTimeInterval)remainingTime {
@@ -69,8 +75,8 @@ static const char APUpdatableItemMetadataKey;
         return;
     }
     
-    APTimeUnit itemTimeUnit = [metadata timeUnit];
-    if(itemTimeUnit != APTimeUnitNone && [NSDate isUnit:itemTimeUnit smallerThanUnit:_updateInterval])
+    APTimeUnit itemTimeUnit = metadata.updateIntervalTimeUnit;
+    if(itemTimeUnit != APTimeUnitNone && [NSDate isUnit:itemTimeUnit smallerThanUnit:_updateIntervalTimeUnit])
         [self restartUpdatingWithInterval:itemTimeUnit];
 }
 
@@ -113,43 +119,136 @@ static const char APUpdatableItemMetadataKey;
 #pragma mark -
 
 - (BOOL)isUpdating {
-    return NO;
+    return _intervalTimer != nil;
 }
 
 - (void)startUpdating {
     if([self isUpdating])
         return;
+    
+    _updateIntervalTimeUnit = [self requiredUpdateIntervalTimeUnit];
+    NSTimeInterval updateInterval = [self updateIntervalForTimeUnit:_updateIntervalTimeUnit];
+    _intervalTimer = [[APFixedIntervalTimer alloc] initWithInterval:updateInterval];
+    [_intervalTimer setDelegate:self];
+    [_intervalTimer start];
 }
 
 - (void)restartUpdatingWithInterval:(APTimeUnit)interval {
+    if(![self isUpdating])
+        return;
     
+    _updateIntervalTimeUnit = interval;
+    NSTimeInterval newUpdateInterval = [self updateIntervalForTimeUnit:interval];
+    [_intervalTimer setInterval:newUpdateInterval];
+}
+
+- (APTimeUnit)requiredUpdateIntervalTimeUnit {
+    APTimeUnit interval = APTimeUnitNone;
+    for(id<IAPUpdatable> item in [self items]){
+        APUpdatableItemMetadata *metadata = [self metadataForItem:item];
+        APTimeUnit itemTimeUnit = metadata.updateIntervalTimeUnit;
+        if(itemTimeUnit == APTimeUnitNone)
+            continue;
+        
+        if(interval == APTimeUnitNone){
+            interval = itemTimeUnit;
+            continue;
+        }
+        
+        if([NSDate isUnit:itemTimeUnit smallerThanUnit:interval])
+            interval = itemTimeUnit;
+    }
+    
+    return interval;
+}
+
+- (NSTimeInterval)updateIntervalForTimeUnit:(APTimeUnit)timeUnit {
+    if(timeUnit == APTimeUnitSecond)
+        return timeUnit / 2.0;
+    
+    return timeUnit;
+}
+
+- (void)fixedIntervalTime:(APFixedIntervalTimer *)timer reachedInterval:(NSTimeInterval)interval {
+    [self fullUpdate];
+}
+
+- (void)fullUpdate {
+    [self update];
+    
+    APTimeUnit requiredUpdateIntervalTimeUnit = [self requiredUpdateIntervalTimeUnit];
+    if(requiredUpdateIntervalTimeUnit == APTimeUnitNone){
+        [self stopUpdating];
+        return;
+    }
+    
+    if([NSDate isUnit:requiredUpdateIntervalTimeUnit smallerThanUnit:_updateIntervalTimeUnit])
+        [self restartUpdatingWithInterval:requiredUpdateIntervalTimeUnit];
+}
+
+- (void)update {
+    CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
+    for(id<IAPUpdatable> item in [self items]){
+        [self updateItem:item withCurrentTime:currentTime];
+    }
+}
+
+- (void)updateItem:(id<IAPUpdatable>)item withCurrentTime:(CFAbsoluteTime)currentTime {
+    APUpdatableItemMetadata *metadata = [self metadataForItem:item];
+    if(![metadata isUpdatable])
+        return;
+    
+    NSTimeInterval elapsedTime = currentTime - metadata.lastUpdateTime;
+    NSTimeInterval remainingTime = metadata.remainingTime - elapsedTime;
+    APUpdatableItemStatus status = [metadata statusWithRemainingTime:remainingTime];
+    if(!APUpdatableItemStatusRequiresUpdate(status))
+        return;
+    
+    [metadata setRemainingTime:remainingTime withCurrentTime:currentTime];
+    [item updateWithRemainingTime:remainingTime];
+    
+    if(status == APUpdatableItemStatusExpired){
+        if([self.delegate respondsToSelector:@selector(batchUpdater:didFinishUpdatingItem:)])
+            [self.delegate batchUpdater:self didFinishUpdatingItem:item];
+    }
 }
 
 - (void)stopUpdating {
     if(![self isUpdating])
         return;
-}
-
-- (BOOL)isPaused {
-    return NO;
+    
+    [_intervalTimer setDelegate:nil];
+    [_intervalTimer stop];
+    _intervalTimer = nil;
 }
 
 - (void)pause {
+    if([self isPaused])
+        return;
     
+    _paused = YES;
+    
+    [self stopUpdating];
 }
 
 - (void)resume {
+    if(![self isPaused])
+        return;
     
+    _paused = NO;
+    
+    [self update];
+    
+    [self startUpdating];
 }
 
 #pragma mark -
 
 - (void)reset {
+    [self stopUpdating];
     
-}
-
-- (void)teardown {
-    
+    NSMutableSet *items = [self items];
+    [items removeAllObjects];
 }
 
 @end

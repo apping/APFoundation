@@ -14,6 +14,8 @@
 
 @interface APBatchUpdater : NSObject
 
+@property (nonatomic, readonly, getter = isPaused) BOOL paused;
+
 @property (nonatomic, weak) id<APBatchUpdaterDelegate> delegate;
 
 - (void)addItem:(id<IAPUpdatable>)item withRemainingTime:(NSTimeInterval)remainingTime;
@@ -21,12 +23,10 @@
 - (BOOL)isUpdatingItem:(id<IAPUpdatable>)item;
 
 - (BOOL)isUpdating;
-- (BOOL)isPaused;
 - (void)pause;
 - (void)resume;
 
 - (void)reset;
-- (void)teardown;
 
 @end
 

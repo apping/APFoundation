@@ -15,8 +15,10 @@
 
 @property (atomic, weak) id<APFixedIntervalTimerDelegate> delegate;
 
-- (APTimeUnit)interval;
-- (void)setInterval:(APTimeUnit)interval;
+- (id)initWithInterval:(NSTimeInterval)interval;
+
+- (NSTimeInterval)interval;
+- (void)setInterval:(NSTimeInterval)interval;
 
 - (BOOL)isRunning;
 - (void)start;
@@ -27,6 +29,6 @@
 @protocol APFixedIntervalTimerDelegate <NSObject>
 
 @optional
-- (void)fixedIntervalTime:(APFixedIntervalTimer *)timer reachedInterval:(APTimeUnit)interval;
+- (void)fixedIntervalTime:(APFixedIntervalTimer *)timer reachedInterval:(NSTimeInterval)interval;
 
 @end

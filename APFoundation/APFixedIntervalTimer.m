@@ -15,25 +15,36 @@
 - (dispatch_semaphore_t)timerSemaphore;
 
 - (void)run;
-- (void)reachedInterval:(APTimeUnit)interval;
+- (void)reachedInterval:(NSTimeInterval)interval;
 
 @end
 
 @implementation APFixedIntervalTimer {
-    APTimeUnit __interval;
+    NSTimeInterval __interval;
+    CFAbsoluteTime _lastIntervalTime;
     
     BOOL __running;
     NSThread *__timerThread;
     dispatch_semaphore_t __timerSemaphore;
 }
 
-- (APTimeUnit)interval {
+- (id)initWithInterval:(NSTimeInterval)interval {
+    self = [super init];
+    
+    if(self){
+        __interval = interval;
+    }
+    
+    return self;
+}
+
+- (NSTimeInterval)interval {
     @synchronized(self){
         return __interval;
     }
 }
 
-- (void)setInterval:(APTimeUnit)interval {
+- (void)setInterval:(NSTimeInterval)interval {
     @synchronized(self){
         if(__interval == interval)
             return;
@@ -74,16 +85,24 @@
 - (void)run {
     [self setRunning:YES];
     
+    _lastIntervalTime = CFAbsoluteTimeGetCurrent();
+    
     do{
-        APTimeUnit interval = [self interval];
-        if(dispatch_semaphore_wait([self timerSemaphore], dispatch_time(DISPATCH_TIME_NOW, interval)) == 0)
-            continue;
+        NSTimeInterval interval = [self interval];
+        CFAbsoluteTime currentTime = CFAbsoluteTimeGetCurrent();
+        NSTimeInterval elapsedTime = currentTime - _lastIntervalTime;
+        NSTimeInterval waitDuration = interval - elapsedTime;
+        if(dispatch_semaphore_wait([self timerSemaphore], dispatch_time(DISPATCH_TIME_NOW, (int64_t) (waitDuration * NSEC_PER_SEC))) == 0)
+            goto end;
         
         [self reachedInterval:interval];
+        
+    end:
+        _lastIntervalTime = CFAbsoluteTimeGetCurrent();
     }while([self isRunning]);
 }
 
-- (void)reachedInterval:(APTimeUnit)interval {
+- (void)reachedInterval:(NSTimeInterval)interval {
     @synchronized(self){
         if(![self isRunning])
             return;

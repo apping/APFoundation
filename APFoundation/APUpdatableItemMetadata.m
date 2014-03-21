@@ -8,10 +8,52 @@
 
 #import "APUpdatableItemMetadata.h"
 
-@implementation APUpdatableItemMetadata
+#define CRITICAL_MINUTES_THRESHOLD 5
 
-- (APUpdatableItemStatus)statusWithRemainingtime:(NSTimeInterval)remainingTime {
-    return APUpdatableItemStatusNoChange;
+#define RETURN_STATUS(MACRO_status) \
+_lastKnownStatus = MACRO_status; \
+return MACRO_status;
+
+@implementation APUpdatableItemMetadata {
+    APTimeUnit _timeUnit;
+    NSUInteger _units;
+    
+    APUpdatableItemStatus _lastKnownStatus;
+}
+
+- (id)init {
+    self = [super init];
+    
+    if(self){
+        _lastKnownStatus = APUpdatableItemStatusNone;
+    }
+    
+    return self;
+}
+
+- (BOOL)isUpdatable {
+    return _lastKnownStatus != APUpdatableItemStatusExpired;
+}
+
+- (APUpdatableItemStatus)statusWithRemainingTime:(NSTimeInterval)remainingTime {
+    if(_lastKnownStatus == APUpdatableItemStatusNone){
+        RETURN_STATUS(APUpdatableItemStatusDirty)
+    }
+    
+    if(_timeUnit == APTimeUnitNone){
+        RETURN_STATUS(APUpdatableItemStatusExpired)
+    }
+    
+    NSUInteger currentUnits = [NSDate unitsForTimeInterval:remainingTime inTimeUnit:_timeUnit];
+    if(_timeUnit == APTimeUnitSecond && currentUnits == 0){
+        RETURN_STATUS(APUpdatableItemStatusExpired)
+    }
+    
+    if(currentUnits != _units){
+        RETURN_STATUS(APUpdatableItemStatusDirty)
+    }
+    
+    RETURN_STATUS(APUpdatableItemStatusNoChange)
 }
 
 - (void)setRemainingTime:(NSTimeInterval)remainingTime {
@@ -19,7 +61,19 @@
 }
 
 - (void)setRemainingTime:(NSTimeInterval)remainingTime withCurrentTime:(CFAbsoluteTime)currentTime {
+    _remainingTime = remainingTime;
+    _lastUpdateTime = currentTime;
     
+    _timeUnit = [NSDate biggestUnitForTimeInterval:remainingTime];
+    if([NSDate isUnit:_timeUnit biggerThanUnit:APTimeUnitMinute])
+        _timeUnit = [NSDate unitBelowUnit:_timeUnit];
+    
+    _units = [NSDate unitsForTimeInterval:remainingTime inTimeUnit:_timeUnit];
+    
+    if(_timeUnit == APTimeUnitMinute && _units < CRITICAL_MINUTES_THRESHOLD)
+        _updateIntervalTimeUnit = APTimeUnitSecond;
+    else
+        _updateIntervalTimeUnit = _timeUnit;
 }
 
 @end
