@@ -103,15 +103,15 @@
 }
 
 - (void)reachedInterval:(NSTimeInterval)interval {
-    @synchronized(self){
-        if(![self isRunning])
-            return;
-        
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    if(![self isRunning])
+        return;
+    
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        @synchronized(self){
             if([self.delegate respondsToSelector:@selector(fixedIntervalTime:reachedInterval:)])
                 [self.delegate fixedIntervalTime:self reachedInterval:interval];
-        });
-    }
+        }
+    });
 }
 
 #pragma mark -

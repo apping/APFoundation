@@ -126,8 +126,12 @@ static const char APUpdatableItemMetadataKey;
     if([self isUpdating])
         return;
     
-    _updateIntervalTimeUnit = [self requiredUpdateIntervalTimeUnit];
-    NSTimeInterval updateInterval = [self updateIntervalForTimeUnit:_updateIntervalTimeUnit];
+    APTimeUnit timeUnit = [self requiredUpdateIntervalTimeUnit];
+    if(timeUnit == APTimeUnitNone)
+        return;
+    
+    _updateIntervalTimeUnit = timeUnit;
+    NSTimeInterval updateInterval = [self updateIntervalForTimeUnit:timeUnit];
     _intervalTimer = [[APFixedIntervalTimer alloc] initWithInterval:updateInterval];
     [_intervalTimer setDelegate:self];
     [_intervalTimer start];
