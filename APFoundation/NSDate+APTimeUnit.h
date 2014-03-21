@@ -8,12 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+static const NSUInteger HoursPerDay = 24;
+static const NSUInteger MinutesPerHour = 60;
+static const NSUInteger SecondsPerMinute = 60;
+
 typedef NS_ENUM(NSUInteger, APTimeUnit) {
     APTimeUnitNone = 0,
     APTimeUnitSecond = 1,
-    APTimeUnitMinute = 60,
-    APTimeUnitHour = 60 * 60,
-    APTimeUnitDay = 60 * 60 * 24
+    APTimeUnitMinute = SecondsPerMinute,
+    APTimeUnitHour = MinutesPerHour * SecondsPerMinute,
+    APTimeUnitDay = HoursPerDay * MinutesPerHour * SecondsPerMinute
 };
 
 @interface NSDate (APTimeUnit)
