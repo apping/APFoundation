@@ -36,10 +36,6 @@ return MACRO_status;
 }
 
 - (APUpdatableItemStatus)statusWithRemainingTime:(NSTimeInterval)remainingTime {
-    if(_lastKnownStatus == APUpdatableItemStatusNone){
-        RETURN_STATUS(APUpdatableItemStatusDirty)
-    }
-    
     if(_timeUnit == APTimeUnitNone){
         RETURN_STATUS(APUpdatableItemStatusExpired)
     }
