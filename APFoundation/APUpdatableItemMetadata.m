@@ -32,7 +32,7 @@ return MACRO_status;
 }
 
 - (BOOL)isUpdatable {
-    return _lastKnownStatus != APUpdatableItemStatusExpired;
+    return _timeUnit != APTimeUnitNone && _lastKnownStatus != APUpdatableItemStatusExpired;
 }
 
 - (APUpdatableItemStatus)statusWithRemainingTime:(NSTimeInterval)remainingTime {
@@ -61,6 +61,11 @@ return MACRO_status;
     _lastUpdateTime = currentTime;
     
     _timeUnit = [NSDate biggestUnitForTimeInterval:remainingTime];
+    if(_timeUnit == APTimeUnitNone){
+        _updateIntervalTimeUnit = APTimeUnitNone;
+        return;
+    }
+    
     if([NSDate isUnit:_timeUnit biggerThanUnit:APTimeUnitMinute])
         _timeUnit = [NSDate unitBelowUnit:_timeUnit];
     
