@@ -10,6 +10,7 @@
 #import "IAPUpdatable.h"
 #import "APUpdatableItemMetadata.h"
 #import "APFixedIntervalTimer.h"
+#import <UIKit/UIApplication.h>
 #import <objc/runtime.h>
 
 static const char APUpdatableItemMetadataKey;
@@ -34,6 +35,9 @@ static const char APUpdatableItemMetadataKey;
 - (APUpdatableItemMetadata *)metadataForItem:(id<IAPUpdatable>)item;
 - (void)attachMetadata:(APUpdatableItemMetadata *)metadata toItem:(id<IAPUpdatable>)item;
 
+- (void)applicationDidBecomeActive:(NSNotification *)notification;
+- (void)applicationDidEnterBackground:(NSNotification *)notification;
+
 @end
 
 @implementation APBatchUpdater {
@@ -41,6 +45,18 @@ static const char APUpdatableItemMetadataKey;
     
     APTimeUnit _updateIntervalTimeUnit;
     APFixedIntervalTimer *_intervalTimer;
+}
+
+- (id)init {
+    self = [super init];
+    
+    if(self){
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        [notificationCenter addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    }
+    
+    return self;
 }
 
 - (void)addItem:(id<IAPUpdatable>)item withRemainingTime:(NSTimeInterval)remainingTime {
@@ -253,6 +269,20 @@ static const char APUpdatableItemMetadataKey;
     
     NSMutableSet *items = [self items];
     [items removeAllObjects];
+}
+
+#pragma mark -
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    [self resume];
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification {
+    [self pause];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
