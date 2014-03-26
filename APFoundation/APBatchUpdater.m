@@ -23,7 +23,6 @@ static const char APUpdatableItemMetadataKey;
 - (void)startUpdating;
 - (void)restartUpdatingWithInterval:(APTimeUnit)interval;
 - (APTimeUnit)requiredUpdateIntervalTimeUnit;
-- (NSTimeInterval)updateIntervalForTimeUnit:(APTimeUnit)timeUnit;
 - (void)fullUpdate;
 - (void)update;
 - (void)updateItem:(id<IAPUpdatable>)item withCurrentTime:(CFAbsoluteTime)currentTime;
@@ -142,13 +141,12 @@ static const char APUpdatableItemMetadataKey;
     if([self isUpdating])
         return;
     
-    APTimeUnit timeUnit = [self requiredUpdateIntervalTimeUnit];
-    if(timeUnit == APTimeUnitNone)
+    APTimeUnit interval = [self requiredUpdateIntervalTimeUnit];
+    if(interval == APTimeUnitNone)
         return;
     
-    _updateIntervalTimeUnit = timeUnit;
-    NSTimeInterval updateInterval = [self updateIntervalForTimeUnit:timeUnit];
-    _intervalTimer = [[APFixedIntervalTimer alloc] initWithInterval:updateInterval];
+    _updateIntervalTimeUnit = interval;
+    _intervalTimer = [[APFixedIntervalTimer alloc] initWithInterval:interval];
     [_intervalTimer setDelegate:self];
     [_intervalTimer start];
 }
@@ -158,8 +156,7 @@ static const char APUpdatableItemMetadataKey;
         return;
     
     _updateIntervalTimeUnit = interval;
-    NSTimeInterval newUpdateInterval = [self updateIntervalForTimeUnit:interval];
-    [_intervalTimer setInterval:newUpdateInterval];
+    [_intervalTimer setInterval:interval];
 }
 
 - (APTimeUnit)requiredUpdateIntervalTimeUnit {
@@ -180,13 +177,6 @@ static const char APUpdatableItemMetadataKey;
     }
     
     return interval;
-}
-
-- (NSTimeInterval)updateIntervalForTimeUnit:(APTimeUnit)timeUnit {
-    if(timeUnit == APTimeUnitSecond)
-        return timeUnit / 2.0;
-    
-    return timeUnit;
 }
 
 - (void)fixedIntervalTime:(APFixedIntervalTimer *)timer reachedInterval:(NSTimeInterval)interval {
