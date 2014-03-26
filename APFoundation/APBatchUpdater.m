@@ -23,6 +23,7 @@ static const char APUpdatableItemMetadataKey;
 - (void)startUpdating;
 - (void)restartUpdatingWithInterval:(APTimeUnit)interval;
 - (APTimeUnit)requiredUpdateIntervalTimeUnit;
+- (NSTimeInterval)updateIntervalForTimeUnit:(APTimeUnit)timeUnit;
 - (void)fullUpdate;
 - (void)update;
 - (void)updateItem:(id<IAPUpdatable>)item withCurrentTime:(CFAbsoluteTime)currentTime;
@@ -67,6 +68,8 @@ static const char APUpdatableItemMetadataKey;
     [metadata setRemainingTime:remainingTime];
     [item updateWithRemainingTime:remainingTime];
     
+    NSLog(@"Added item: %@ with remainingTime: %f", item, remainingTime);
+    
     [self proposeUpdateStartForItem:item withMetadata:metadata];
 }
 
@@ -82,17 +85,22 @@ static const char APUpdatableItemMetadataKey;
 }
 
 - (void)proposeUpdateStartForItem:(id<IAPUpdatable>)item withMetadata:(APUpdatableItemMetadata *)metadata {
-    if([self isPaused])
+    if([self isPaused]){
+        NSLog(@"Was paused in propose update start!");
         return;
+    }
     
     if(![self isUpdating]){
+        NSLog(@"Wasn't updating in propose update start - starting update");
         [self startUpdating];
         return;
     }
     
     APTimeUnit itemTimeUnit = metadata.updateIntervalTimeUnit;
-    if(itemTimeUnit != APTimeUnitNone && [NSDate isUnit:itemTimeUnit smallerThanUnit:_updateIntervalTimeUnit])
+    if(itemTimeUnit != APTimeUnitNone && [NSDate isUnit:itemTimeUnit smallerThanUnit:_updateIntervalTimeUnit]){
+        NSLog(@"itemTimeUnit: %@ is smaller than _updateIntervalTimeUnit: %@", [NSDate timeUnitString:itemTimeUnit], [NSDate timeUnitString:_updateIntervalTimeUnit]);
         [self restartUpdatingWithInterval:itemTimeUnit];
+    }
 }
 
 - (void)removeItem:(id<IAPUpdatable>)item {
@@ -138,25 +146,39 @@ static const char APUpdatableItemMetadataKey;
 }
 
 - (void)startUpdating {
-    if([self isUpdating])
+    NSLog(@"Start updating!");
+    
+    if([self isUpdating]){
+        NSLog(@"Was updating already - returning");
+        return;
+    }
+    
+    APTimeUnit timeUnit = [self requiredUpdateIntervalTimeUnit];
+    NSLog(@"Requied uit: %@", [NSDate timeUnitString:timeUnit]);
+    if(timeUnit == APTimeUnitNone)
         return;
     
-    APTimeUnit interval = [self requiredUpdateIntervalTimeUnit];
-    if(interval == APTimeUnitNone)
-        return;
-    
-    _updateIntervalTimeUnit = interval;
-    _intervalTimer = [[APFixedIntervalTimer alloc] initWithInterval:interval];
+    _updateIntervalTimeUnit = timeUnit;
+    NSTimeInterval updateInterval = [self updateIntervalForTimeUnit:timeUnit];
+    NSLog(@"Resulting in updateInterval: %f", updateInterval);
+    _intervalTimer = [[APFixedIntervalTimer alloc] initWithInterval:updateInterval];
     [_intervalTimer setDelegate:self];
     [_intervalTimer start];
+    
+    NSLog(@"Started!");
 }
 
 - (void)restartUpdatingWithInterval:(APTimeUnit)interval {
-    if(![self isUpdating])
+    NSLog(@"Restarting updating with interval: %@", [NSDate timeUnitString:interval]);
+    if(![self isUpdating]){
+        NSLog(@"Was not updating when restarting - returning");
         return;
+    }
     
     _updateIntervalTimeUnit = interval;
-    [_intervalTimer setInterval:interval];
+    NSTimeInterval newUpdateInterval = [self updateIntervalForTimeUnit:interval];
+    NSLog(@"Resulting in new update interval: %f", newUpdateInterval);
+    [_intervalTimer setInterval:newUpdateInterval];
 }
 
 - (APTimeUnit)requiredUpdateIntervalTimeUnit {
@@ -179,7 +201,19 @@ static const char APUpdatableItemMetadataKey;
     return interval;
 }
 
+- (NSTimeInterval)updateIntervalForTimeUnit:(APTimeUnit)timeUnit {
+    if(timeUnit == APTimeUnitSecond)
+        return timeUnit / 2.0;
+    
+    return timeUnit;
+}
+
 - (void)fixedIntervalTime:(APFixedIntervalTimer *)timer reachedInterval:(NSTimeInterval)interval {
+    static int index = 0;
+    
+    if(index++ % 60 == 0)
+        NSLog(@"Full update (%@, %f)", timer, interval);
+    
     [self fullUpdate];
 }
 
@@ -188,12 +222,15 @@ static const char APUpdatableItemMetadataKey;
     
     APTimeUnit requiredUpdateIntervalTimeUnit = [self requiredUpdateIntervalTimeUnit];
     if(requiredUpdateIntervalTimeUnit == APTimeUnitNone){
+        NSLog(@"Required update interval became none in fullUpdate!");
         [self stopUpdating];
         return;
     }
     
-    if(requiredUpdateIntervalTimeUnit != _updateIntervalTimeUnit)
+    if(requiredUpdateIntervalTimeUnit != _updateIntervalTimeUnit){
+        NSLog(@"Required interval: %@ is not equal to _updateIntervalTimeUnit: %@ - in fullUpdate - restarting", [NSDate timeUnitString:requiredUpdateIntervalTimeUnit], [NSDate timeUnitString:_updateIntervalTimeUnit]);
         [self restartUpdatingWithInterval:requiredUpdateIntervalTimeUnit];
+    }
 }
 
 - (void)update {
@@ -214,40 +251,64 @@ static const char APUpdatableItemMetadataKey;
     if(!APUpdatableItemStatusRequiresUpdate(status))
         return;
     
+    NSLog(@"Updating item: %@ - %f", item, remainingTime);
+    
     [metadata setRemainingTime:remainingTime withCurrentTime:currentTime];
     [item updateWithRemainingTime:remainingTime];
     
     if(status == APUpdatableItemStatusExpired){
+        NSLog(@"Item also expired!");
+        
         if([self.delegate respondsToSelector:@selector(batchUpdater:didFinishUpdatingItem:)])
             [self.delegate batchUpdater:self didFinishUpdatingItem:item];
     }
 }
 
 - (void)stopUpdating {
-    if(![self isUpdating])
-        return;
+    NSLog(@"Stop updating!");
     
+    if(![self isUpdating]){
+        NSLog(@"Was not updating when - returning");
+        return;
+    }
+    
+    NSLog(@"Stopping");
     [_intervalTimer setDelegate:nil];
     [_intervalTimer stop];
     _intervalTimer = nil;
+    NSLog(@"Stopped");
 }
 
 - (void)pause {
-    if([self isPaused])
+    NSLog(@"pause");
+    
+    if([self isPaused]){
+        NSLog(@"Was already paused - returning");
         return;
+    }
     
     _paused = YES;
+    
+    NSLog(@"Calling stop updating");
     
     [self stopUpdating];
 }
 
 - (void)resume {
-    if(![self isPaused])
+    NSLog(@"resume");
+    
+    if(![self isPaused]){
+        NSLog(@"Was not paused - returning");
         return;
+    }
     
     _paused = NO;
     
+    NSLog(@"Performing manual update");
+    
     [self update];
+    
+    NSLog(@"Calling start updating");
     
     [self startUpdating];
 }
@@ -255,6 +316,8 @@ static const char APUpdatableItemMetadataKey;
 #pragma mark -
 
 - (void)reset {
+    NSLog(@"Reset");
+    
     [self stopUpdating];
     
     NSMutableSet *items = [self items];

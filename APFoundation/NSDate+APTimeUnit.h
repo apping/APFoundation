@@ -36,4 +36,6 @@ typedef NS_ENUM(NSUInteger, APTimeUnit) {
 
 + (APTimeUnit)biggestUnitForTimeInterval:(NSTimeInterval)timeInterval;
 
++ (NSString *)timeUnitString:(APTimeUnit)timeUnit;
+
 @end

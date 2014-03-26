@@ -28,4 +28,6 @@ typedef NS_ENUM(NSUInteger, APUpdatableItemStatus){
 - (APUpdatableItemStatus)statusWithRemainingTime:(NSTimeInterval)remainingTime;
 - (void)setRemainingTime:(NSTimeInterval)remainingTime withCurrentTime:(CFAbsoluteTime)currentTime;
 
++ (NSString *)statusString:(APUpdatableItemStatus)status;
+
 @end

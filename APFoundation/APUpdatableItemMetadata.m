@@ -77,4 +77,14 @@ return MACRO_status;
         _updateIntervalTimeUnit = _timeUnit;
 }
 
++ (NSString *)statusString:(APUpdatableItemStatus)status {
+    switch(status){
+        case APUpdatableItemStatusNone: return @"None";
+        case APUpdatableItemStatusNoChange: return @"No Change";
+        case APUpdatableItemStatusDirty: return @"Dirty";
+        case APUpdatableItemStatusExpired: return @"Expired";
+        default: return nil;
+    }
+}
+
 @end

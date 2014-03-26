@@ -45,34 +45,56 @@
 }
 
 - (void)setInterval:(NSTimeInterval)interval {
+    NSLog(@"Trying to set interval!");
+    
     @synchronized(self){
         if(__interval == interval)
             return;
         
         __interval = interval;
         
-        if(![self isRunning])
+        NSLog(@"Changing interval to: %f", interval);
+        
+        if(![self isRunning]){
+            NSLog(@"Wasn't running - returning");
             return;
+        }
+        
+        NSLog(@"Was running !!! signaling");
         
         dispatch_semaphore_signal([self timerSemaphore]);
     }
 }
 
 - (void)start {
+    NSLog(@"Trying to start interval timer!");
+    
     @synchronized(self){
-        if([self isRunning])
+        NSLog(@"Start interval timer");
+        
+        if([self isRunning]){
+            NSLog(@"Was allready running interval timer!!! returning");
             return;
+        }
         
         NSThread *timerThread = [self timerThread];
-        if([timerThread isExecuting])
+        if([timerThread isExecuting]){
+            NSLog(@"Was executing timerThread");
             return;
+        }
+        
+        NSLog(@"Starting timer thread");
         
         [timerThread start];
     }
 }
 
 - (void)stop {
+    NSLog(@"Trying to stop interval timer!");
+    
     @synchronized(self){
+        NSLog(@"Stopping interval timer");
+        
         if(![self isRunning])
             return;
         
@@ -83,9 +105,13 @@
 #pragma mark -
 
 - (void)run {
+    NSLog(@"Run");
+    
     [self setRunning:YES];
     
     _lastIntervalTime = CFAbsoluteTimeGetCurrent();
+    
+    NSLog(@"Running");
     
     do{
         NSTimeInterval interval = [self interval];
@@ -103,8 +129,10 @@
 }
 
 - (void)reachedInterval:(NSTimeInterval)interval {
-    if(![self isRunning])
+    if(![self isRunning]){
+        NSLog(@"Wasn't running when reachedInterval: %f", interval);
         return;
+    }
     
     dispatch_sync(dispatch_get_main_queue(), ^{
         @synchronized(self){
@@ -123,14 +151,21 @@
 }
 
 - (void)setRunning:(BOOL)running {
+    NSLog(@"Trying to set running: %i", running);
+    
     @synchronized(self){
         if(__running == running)
             return;
         
+        NSLog(@"Setting running: %i", running);
+        
         __running = running;
         
-        if(!running)
+        if(!running){
+            NSLog(@"Was running --- signaling");
+            
             dispatch_semaphore_signal([self timerSemaphore]);
+        }
     }
 }
 

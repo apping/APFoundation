@@ -83,4 +83,14 @@
     return APTimeUnitNone;
 }
 
++ (NSString *)timeUnitString:(APTimeUnit)timeUnit {
+    switch(timeUnit){
+        case APTimeUnitSecond: return @"Second";
+        case APTimeUnitMinute: return @"Minute";
+        case APTimeUnitHour: return @"Hour";
+        case APTimeUnitDay: return @"Day";
+        default: return nil;
+    }
+}
+
 @end
