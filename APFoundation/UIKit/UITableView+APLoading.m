@@ -70,6 +70,7 @@ static const char UITableViewAPLoadingPresentationTimerKey;
 
 - (void)beginLoadWithHandler:(APTableViewLoadingHandler)handler type:(APTableViewLoadingType)type minimumLoadingTime:(NSTimeInterval)minimumLoadingTime loadingView:(UIView<IAPTableViewLoadingView> *)loadingView completionHandler:(APTableViewLoadingCompletionHandler)completionHandler {
     APPresentationTimer *presentationTimer = [self presentationTimer];
+    [presentationTimer invalidate];
     [presentationTimer setMinimumPresentationTime:minimumLoadingTime];
     [presentationTimer time];
     

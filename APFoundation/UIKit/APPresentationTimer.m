@@ -44,7 +44,7 @@
 
 - (void)endWithCompletionHandler:(APPresentationTimerCompletionHandler)completionHandler {
     NSAssert(completionHandler, @"completionHandler cannot be NULL!");
-    NSAssert(_presentationTime != 0.0, @"endWithCompletionHandler: cannot be called before the timer has started!");
+//    NSAssert(_presentationTime != 0.0, @"endWithCompletionHandler: cannot be called before the timer has started!");
     
     if(_minimumPresentationTime != 0.0){
         CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
@@ -60,6 +60,10 @@
     }
     
     [self doneWithCompletionHandler:completionHandler];
+}
+
+- (void)invalidate {
+    _presentationTime = 0.0;
 }
 
 - (void)doneWithCompletionHandler:(APPresentationTimerCompletionHandler)completionHandler {

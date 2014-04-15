@@ -21,4 +21,6 @@ typedef void (^APPresentationTimerCompletionHandler)();
 - (void)timeWithCompletionHandler:(APPresentationTimerCompletionHandler)completionHandler;
 - (void)endWithCompletionHandler:(APPresentationTimerCompletionHandler)completionHandler;
 
+- (void)invalidate;
+
 @end
