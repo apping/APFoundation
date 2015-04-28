@@ -1,0 +1,14 @@
+PODS:
+  - APFoundation (0.1.0)
+
+DEPENDENCIES:
+  - APFoundation (from `../`)
+
+EXTERNAL SOURCES:
+  APFoundation:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  APFoundation: 23c23ca94c55bd61071c91223c3197547ba2a882
+
+COCOAPODS: 0.37.0.beta.1
