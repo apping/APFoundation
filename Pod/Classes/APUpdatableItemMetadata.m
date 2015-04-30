@@ -8,7 +8,7 @@
 
 #import "APUpdatableItemMetadata.h"
 
-#define CRITICAL_MINUTES_THRESHOLD 5
+#define CRITICAL_MINUTES_THRESHOLD 10
 
 #define RETURN_STATUS(MACRO_status) \
 _lastKnownStatus = MACRO_status; \
@@ -36,7 +36,7 @@ return MACRO_status;
 }
 
 - (APUpdatableItemStatus)statusWithRemainingTime:(NSTimeInterval)remainingTime {
-    if(_timeUnit == APTimeUnitNone){
+    if(_timeUnit == APTimeUnitNone || remainingTime <= 0.0){
         RETURN_STATUS(APUpdatableItemStatusExpired)
     }
     
@@ -71,8 +71,11 @@ return MACRO_status;
     
     _units = [NSDate unitsForTimeInterval:remainingTime inTimeUnit:_timeUnit];
     
-    if(_timeUnit == APTimeUnitMinute && _units < CRITICAL_MINUTES_THRESHOLD)
+    if(_timeUnit == APTimeUnitMinute && _units <= CRITICAL_MINUTES_THRESHOLD){
+        _timeUnit = APTimeUnitSecond;
+        _units = [NSDate unitsForTimeInterval:remainingTime inTimeUnit:APTimeUnitSecond];
         _updateIntervalTimeUnit = APTimeUnitSecond;
+    }
     else
         _updateIntervalTimeUnit = _timeUnit;
 }
