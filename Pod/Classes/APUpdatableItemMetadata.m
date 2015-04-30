@@ -57,6 +57,9 @@ return MACRO_status;
 }
 
 - (void)setRemainingTime:(NSTimeInterval)remainingTime withCurrentTime:(CFAbsoluteTime)currentTime {
+    if(_lastKnownStatus == APUpdatableItemStatusExpired && remainingTime > 0.0)
+        _lastKnownStatus = APUpdatableItemStatusNone;
+    
     _remainingTime = remainingTime;
     _lastUpdateTime = currentTime;
     
