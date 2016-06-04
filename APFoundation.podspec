@@ -10,9 +10,9 @@
 Pod::Spec.new do |s|
   s.name             = "APFoundation"
   s.version          = "0.1.0"
-  s.summary          = "APFoundation from Apping AB"
+  s.summary          = "APFoundation from Apping AB with some useful extensions and classes"
   s.description      = <<-DESC
-                       
+                       APFoundation from Apping AB with some useful extensions and classes
                        DESC
   s.homepage         = "https://github.com/apping/APFoundation"
   # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
